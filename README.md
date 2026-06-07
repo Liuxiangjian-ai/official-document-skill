@@ -5,7 +5,6 @@
   <img src="https://img.shields.io/badge/场景-公文写作-green" />
   <img src="https://img.shields.io/badge/风格-去AI味-orange" />
   <img src="https://img.shields.io/badge/协议-MIT-lightgrey" />
-  <br/>
   <img src="https://img.shields.io/badge/文种-11+-red" />
   <img src="https://img.shields.io/badge/方法-Codex风格蒸馏-yellow" />
   <img src="https://img.shields.io/badge/评分-6维自动-brightgreen" />
