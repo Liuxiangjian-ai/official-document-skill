@@ -1,4 +1,4 @@
-# 🧾 公文写作与去 AI 味 Skill
+#  公文写作与去 AI 味 Skill
 
 <p align="center">
   <img src="https://img.shields.io/badge/Language-中文-blue?style=for-the-badge" />
@@ -7,21 +7,13 @@
   <img src="https://img.shields.io/badge/ChatGPT-Skill-purple?style=for-the-badge" />
   <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge" />
   <br/>
-  <img src="https://img.shields.io/badge/通知-supported-blue" />
-  <img src="https://img.shields.io/badge/请示-supported-blue" />
-  <img src="https://img.shields.io/badge/报告-supported-blue" />
-  <img src="https://img.shields.io/badge/方案-supported-blue" />
-  <img src="https://img.shields.io/badge/总结-supported-blue" />
-  <img src="https://img.shields.io/badge/讲话稿-supported-blue" />
-  <img src="https://img.shields.io/badge/调研报告-supported-blue" />
-  <img src="https://img.shields.io/badge/简报-supported-blue" />
-  <img src="https://img.shields.io/badge/宣传稿-supported-blue" />
-  <img src="https://img.shields.io/badge/表态发言-supported-blue" />
-  <img src="https://img.shields.io/badge/理论评论文章-supported-blue" />
+  <img src="https://img.shields.io/badge/文种-11%2B-red" />
+  <img src="https://img.shields.io/badge/语料-人民日报100余篇-yellow" />
+  <img src="https://img.shields.io/badge/评分-6维自动-brightgreen" />
+  <img src="https://img.shields.io/badge/去AI味-已启用-ff69b4" />
 </p>
-
-> 一个面向中文公文写作的 ChatGPT Skill：  
-> **不堆套话，不写空话，不把所有材料写成宣传稿。**  
+> 一个面向中文公文写作的 Skill：  
+> **不堆套话，不写空话。**  
 > 它会根据文种、场景和材料，生成结构规范、表达稳妥、内容具体、去 AI 味的中文公文。
 
 ---
