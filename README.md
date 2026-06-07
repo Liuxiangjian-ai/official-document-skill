@@ -4,14 +4,11 @@
   <img src="https://img.shields.io/badge/语言-中文-blue" />
   <img src="https://img.shields.io/badge/场景-公文写作-green" />
   <img src="https://img.shields.io/badge/风格-去AI味-orange" />
-  <img src="https://img.shields.io/badge/平台-ChatGPT_Skill-purple" />
   <img src="https://img.shields.io/badge/协议-MIT-lightgrey" />
   <br/>
   <img src="https://img.shields.io/badge/文种-11+-red" />
   <img src="https://img.shields.io/badge/方法-Codex风格蒸馏-yellow" />
-  <img src="https://img.shields.io/badge/语料-人民日报×光明日报数百篇-yellowgreen" />
   <img src="https://img.shields.io/badge/评分-6维自动-brightgreen" />
-  <img src="https://img.shields.io/badge/去AI味-已启用-ff69b4" />
 </p>
 
 > **让 AI 写出的公文，读起来像是人写的。**
@@ -21,13 +18,13 @@
 >
 > ---
 >
-> **🧬 这背后是什么？** 我们用 Codex 对数百篇《人民日报》《光明日报》等报刊文章做了系统分析——从用词频率、句式结构、段落推进方式，到语气控制、事实密度、文种差异——把其中的表达规律蒸馏成了一套可复用的规则。它不是简单地模仿某一篇文章的文风，而是提炼出"好的机关材料长什么样"的底层逻辑。
+> **🧬 这背后是什么？** 我们用 Codex 对数百篇《人民日报》《光明日报》等报刊文章做了系统分析——从用词频率、句式结构、段落推进方式，到语气控制、事实密度、文种差异——把其中的表达规律总结成了一套可复用的规则。它不是简单地模仿某一篇文章的文风，而是提炼出"好的机关材料长什么样"的底层逻辑。
 
 ---
 
 ## 🤔 你有没有遇到过这种情况？
 
-让 ChatGPT 帮你写一份工作报告，它给了你一段这样的文字：
+让AI 帮你写一份工作报告，它给了你一段这样的文字：
 
 ```text
 为深入贯彻落实高质量发展要求，进一步凝心聚力、开拓创新、真抓实干，
