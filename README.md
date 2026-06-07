@@ -278,7 +278,6 @@ Skill 会从六个维度给生成的文本打分，分数不够就继续改，�
 official_document_anti_ai_skill_github/
 ├─ SKILL.md           # Skill 主文件，复制即用
 ├─ README.md          # 本文件
-├─ README.zh-CN.md    # 中文 README 备份
 ├─ TEST_CASES.md      # 测试案例
 └─ LICENSE            # MIT License
 ```
