@@ -4,16 +4,13 @@
   <img src="https://img.shields.io/badge/Language-中文-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Use%20Case-公文写作-green?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Style-去%20AI%20味-orange?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/ChatGPT-Skill-purple?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge" />
   <br/>
   <img src="https://img.shields.io/badge/文种-11%2B-red" />
   <img src="https://img.shields.io/badge/语料-人民日报100余篇-yellow" />
   <img src="https://img.shields.io/badge/评分-6维自动-brightgreen" />
   <img src="https://img.shields.io/badge/去AI味-已启用-ff69b4" />
 </p>
-> 一个面向中文公文写作的 Skill：  
-> **不堆套话，不写空话。**  
+> **不堆套话，不写空话，不把所有材料写成宣传稿。**  
 > 它会根据文种、场景和材料，生成结构规范、表达稳妥、内容具体、去 AI 味的中文公文。
 
 ---
