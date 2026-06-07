@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/评分-6维自动-brightgreen" />
   <img src="https://img.shields.io/badge/去AI味-已启用-ff69b4" />
 </p>
- **不堆套话，不写空话，不把所有材料写成宣传稿。**  
+ 不堆套话，不写空话，不把所有材料写得全面又空洞。  
 它会根据文种、场景和材料，生成结构规范、表达稳妥、内容具体、去 AI 味的中文公文。
 
 ---
