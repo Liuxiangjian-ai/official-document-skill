@@ -1,4 +1,4 @@
-# Official document skill |公文写作Skill
+# Official document skill | 公文写作Skill
 
 <p align="center">
   <img src="https://img.shields.io/badge/语言-中文-blue" />
