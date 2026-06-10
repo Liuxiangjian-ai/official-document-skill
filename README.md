@@ -1,4 +1,4 @@
-# Official Document Skill V1.2
+# Official Document Skill | 公文写作Skill V1.2
 
 <p align="center">
   <img src="https://img.shields.io/badge/版本-V1.2-blue" />
