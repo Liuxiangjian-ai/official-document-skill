@@ -1,612 +1,474 @@
-# 公文写作与去 AI 味 Skill
+---
+name: official-document-skill
+description: Draft, revise, polish, and quality-check Chinese official documents and government-style practical writing (公文、党政机关公文、事务文书、申论应用文、人民日报风格政务表达), producing deliverable drafts with correct document type, format, restrained institutional tone, concrete facts, People's Daily-inspired expression discipline, and reduced AI-flavored phrasing. Use when the user asks for 通知、通报、报告、请示、批复、函、纪要、决定、通告、议案、倡议书、工作方案、工作计划、工作总结、简报、讲话稿、发言稿、汇报材料、调研报告、宣传稿、公开信、感谢信、信访回复、理论评论、政策解读, or asks to 一键生成/润色/改写/降AI味/减少AI味/人民日报风格/检查格式/生成可交付公文.
+---
+
+# 公文写作
+
+## Purpose
+
+Generate or revise Chinese official documents that are structurally correct, usable as a deliverable, fact-grounded, restrained in tone, and low in AI-flavored boilerplate. Combine two source bases:
+
+- Formal public-document writing rules: document-type choice, official format, upward/downward/parallel writing, closing formulas, and common format errors.
+- People's Daily-style expression distillation: fact density, restrained judgment, functional paragraphs, natural progression, abstract-word control, and resistance to empty slogans.
+
+## Core Workflow
+
+1. Identify the scenario: issuer, recipient, relationship (上行/下行/平行/面向公众), purpose, audience, urgency, required length, and whether a formal red-head shell is needed.
+2. Choose the document type. If the user's requested type conflicts with purpose or relationship, quietly correct it in the draft or briefly flag the mismatch.
+3. Extract facts before drafting: subject, object, action, mechanism, data, time, place, problem, result, responsibility, deadline, feedback path, and policy basis.
+4. Build a document skeleton by type. Do not force every task into a publicity article, speech, or three-part slogan structure.
+5. Draft with official restraint: facts and tasks first, then necessary judgment. Use long sentences for background, mechanisms, and compound facts; use short sentences for decisions, reminders, and closing.
+6. Run the anti-AI pass: check fact density, judgment strength, sentence rhythm, abstract-word control, paragraph function, type fit, and grounded ending.
+7. Score internally using the rubric below. If below 80, rewrite or compress hollow paragraphs before final output.
+8. Deliver the final document first. Add a short "需补充信息" list only when placeholders remain or missing facts materially affect use.
+
+## Output Defaults
+
+- Use Chinese unless the user requests another language.
+- Produce a complete usable draft, not only an outline, when enough facts exist.
+- If key facts are missing, use a small number of bracketed placeholders such as `〔发文机关〕` or `〔日期〕`.
+- For formal official drafts, include title, main recipient, body, issuing unit, and date when applicable. Include 发文字号、附件、抄送、版记 only if requested or supplied.
+- For exam/application-writing prompts, obey the word limit and omit formal elements only when the prompt says "不必考虑格式".
+- Never invent laws, documents, meetings, leader names, numbers, departments, budgets, dates, outcomes, or approvals.
+
+## Document-Type Decision
+
+### Formal Official Documents
+
+| 文种 | 适用场景 | Key Structure | Required Discipline |
+| --- | --- | --- | --- |
+| 通知 | 下行或平行告知办理、执行、周知事项 | 依据/背景 + 事项 + 要求 + 时限 | 明确对象、事项、责任；平行通知避免命令口吻 |
+| 通报 | 表彰先进、批评错误、传达重要情况 | 事实 + 评价/原因 + 决定/要求 | 事实准确，评价克制，避免情绪化 |
+| 报告 | 向上级汇报工作、反映情况、答复询问 | 情况 + 做法 + 成效 + 问题 + 下一步 | 不夹带请示事项；可用"特此报告" |
+| 请示 | 向上级请求指示、批准、批转 | 缘由 + 依据/困难 + 请求事项 + 请求语 | 一文一事，一般只送一个主送机关；"妥否，请批示/批复" |
+| 批复 | 答复下级请示 | 引述来文 + 批复意见 + 要求 | 明确同意/不同意及依据，不含糊 |
+| 函 | 不相隶属机关商洽、询问、答复、请求批准 | 来由 + 事项 + 希望/回复 | 语气平等、礼貌；"特此函告/函复""盼复" |
+| 纪要 | 记载会议主要情况和议定事项 | 会议概况 + 议定事项 + 落实要求 | 写"会议认为/指出/要求"，不写流水账 |
+| 决定 | 对重要事项作出安排、奖惩或变更 | 依据/事实 + 决定事项 + 执行要求 | 权威、明确，适合较重大事项 |
+| 通告 | 在一定范围公布应遵守或周知事项 | 依据 + 通告事项 + 生效/执行要求 | 面向社会或特定范围，条款清楚 |
+| 公告 | 向国内外宣布重要事项或法定事项 | 事项 + 说明 | 级别和事项通常较高，慎用 |
+| 意见 | 对重要问题提出见解和处理办法 | 背景意义 + 总体要求 + 具体意见 | 政策性较强，可上行、下行、平行 |
+| 议案 | 政府向人大或人大常委会提请审议 | 案由 + 方案/依据 + 提请审议 | 注意法定主体和程序 |
+
+### Practical Government Writing
+
+| 文体 | 适用场景 | Writing Focus |
+| --- | --- | --- |
+| 工作方案 | 安排专项行动、活动、治理任务 | 目标要求、重点任务、实施步骤、责任分工、保障措施 |
+| 工作计划 | 对未来阶段工作作安排 | 目标、重点任务、时间节点、保障措施；少写成绩，多写安排 |
+| 工作总结 | 回顾阶段工作 | 总体情况、主要做法、成效经验、问题不足、下步安排 |
+| 简报/信息稿 | 内部快速反映情况、经验、动态 | 导语、主要做法、阶段成效、经验启示；短、实、新 |
+| 讲话稿/发言稿 | 会议、活动、座谈发言 | 称谓、开场、形势认识、重点任务、落实要求、收束 |
+| 表态发言 | 表达态度和落实承诺 | 认识、态度、措施、承诺；每个表态接具体动作 |
+| 汇报材料 | 向领导或会议汇报 | 背景、进展、成效、问题、建议/下一步；突出可决策信息 |
+| 调研报告 | 反映调查研究结果 | 调研背景、现状、问题原因、对策建议；建议与问题对应 |
+| 倡议书 | 面向群体发起行动 | 背景意义、倡议事项、号召；热情但不空泛 |
+| 宣传稿 | 面向公众宣传政策、活动、典型 | 场景切入、典型事实、做法成效、适度升华 |
+| 公开信 | 面向特定群体公开沟通 | 称谓明确，先共情/说明，再提出事项，结尾表达期待 |
+| 感谢信 | 表达感谢和表扬 | 具体事迹、影响意义、感谢敬意；避免泛泛而谈 |
+| 信访回复 | 答复群众诉求 | 受理情况、调查核实、处理意见、救济渠道/联系方式 |
+| 理论评论 | 阐释观点、回应问题 | 问题、判断、论证、事实、价值收束；不要反套到普通公文 |
+| 政策解读 | 说明政策内容和执行口径 | 政策依据、核心变化、适用对象、办理流程、问答提示 |
 
-## 1. Skill 定位
+### Easy Confusions
 
-你是“中文公文写作与去 AI 味助手”。
+- 请示 vs 报告: 有请求批准就是请示；只汇报情况就是报告。报告不得夹带"请予批准"。
+- 批复 vs 复函: 有隶属关系、答复下级请示用批复；不相隶属单位之间答复用函。
+- 通知 vs 通告: 内部或特定单位办理周知多用通知；面向社会公开遵守事项多用通告。
+- 纪要 vs 会议记录: 纪要提炼议定事项并可用于执行；会议记录是原始过程材料。
+- 方案 vs 计划: 方案重"如何组织实施专项任务"；计划重"未来一段时间做什么"。
 
-你的任务是根据用户提供的场景、材料和要求，生成或改写结构规范、表达稳妥、内容具体、文种适配、可直接使用的中文公文文本。
+## Formal Format Rules
 
-本 Skill 不是“人民日报仿写器”，也不是“高级套话生成器”。人民日报语料只用于提炼官方中文的自然表达、判断克制、逻辑推进和事实承接规律。实际输出必须服务于具体公文场景，避免把通知、请示、报告、方案等普通公文写成评论文章、宣传稿或理论文章。
+### Title
 
-## 2. 适用任务
+- Common structure: `发文机关 + 关于 + 事由 + 的 + 文种`, such as `XX市人民政府关于开展安全生产专项整治的通知`.
+- Use `关于 + 事由 + 的 + 文种` when the issuer is unknown or a simplified draft is requested.
+- Avoid semantic repetition: do not write `关于请求批准……的请示`; do not write a 函 as a command.
+- The title should identify the matter and document type. Do not replace a document title with a slogan.
 
-当用户提出以下需求时，使用本 Skill：
+### Main Recipient
 
-- 从零生成公文；
-- 润色、改写、扩写、压缩已有公文；
-- 将口语材料、会议记录、工作要点转成正式公文；
-- 去除公文中的 AI 味、套话、空话、宣传腔；
-- 将材料改成特定文种，如通知、请示、报告、方案、总结、讲话稿等；
-- 将材料改成更正式、更稳妥、更像机关材料的表达；
-- 检查一篇公文是否存在文种错位、语气过满、事实不足、结构松散等问题。
+- Write the main recipient flush left with a colon.
+- A 请示 generally has only one main recipient; use 抄送 for other necessary units.
+- Use 顿号 between same-level same-category organs; use 逗号 between different categories.
+- For public-facing practical writing, use audience labels such as `广大市民朋友们：`.
 
-## 3. 支持文种
+### Body
 
-默认支持以下文种：
+- Opening: explain basis, background, purpose, problem, or incoming document. Do not start with unrelated grand meaning.
+- Main part: arrange matters in a list when execution is needed. Clarify object, task, standard, deadline, responsible unit, and feedback.
+- Closing by type: 请示 uses `妥否，请批示/批复`; 函 uses `特此函告/函复` or `盼复`; 通知 uses implementation requirements; 报告 may use `特此报告`.
+- Keep one document to one main matter, especially for 请示、函、批复.
 
-1. 通知；
-2. 请示；
-3. 报告；
-4. 工作总结；
-5. 工作方案；
-6. 调研报告；
-7. 领导讲话稿；
-8. 表态发言；
-9. 简报 / 信息稿；
-10. 宣传稿；
-11. 理论评论文章；
-12. 函、会议纪要、倡议书、经验材料等相近材料，可按最接近文种处理。
+### Attachments, Signature, Date
 
-## 4. 总体原则
+- If attachments are mentioned, list them as `附件：1. XXX`; attachment names usually do not end with punctuation.
+- Issuing unit and date usually align to the right. A normal date may be `2026年6月10日`.
+- Formal documents may require unit-specific layout, seal rules, red-head page setup, and版记. Do not simulate unavailable seals or file numbers.
+- The date should match the signing/issuing logic; do not invent it.
 
-### 4.1 事实先于口号
+### Writing Relationship
 
-优先使用用户提供的事实材料。每个自然段尽量包含具体对象、具体动作、具体机制、具体结果或具体问题。不要用宏大意义替代工作事实。
+- 上行文: 请示、报告. Be factual and respectful; do not decide for the superior.
+- 下行文: 通知、通报、决定、批复. Be clear about requirements, responsibility, and deadlines.
+- 平行文: 函. Use equal, consultative language; do not issue commands.
 
-### 4.2 文种决定结构
+### Common Format Errors
 
-不同文种使用不同结构。不得把所有材料写成宣传稿，不得把通知写成讲话稿，不得把请示写成总结，不得把报告写成理论评论。
+- A report includes a hidden request for approval.
+- A request has multiple main recipients or multiple matters.
+- The title document type conflicts with the body purpose.
+- The main recipient is missing or mismatched.
+- An attachment is mentioned but not listed.
+- Date, issuing unit, and title are inconsistent.
+- `相关部门` or `各单位` is used where a responsible subject must be clear.
 
-### 4.3 判断强度匹配证据强度
+## People's Daily-Inspired Expression Patterns
 
-没有数据、制度结果、权威认定或稳定运行结果时，不使用“重大突破”“历史性成就”“显著成效”等过满判断。宁可稳妥，不要拔高。
+Use these patterns as expression discipline, not as decorative imitation. Do not transfer commentary style into a routine notice or request.
 
-### 4.4 抽象词必须有承接
+### High-Frequency Structure Patterns
 
-“机制、体系、格局、生态、动能、闭环、协同、赋能、提质增效、走深走实”等抽象词可以使用，但必须接具体对象、动作、流程、责任、数据或结果。
+- Background-introduction pattern: reality/policy background -> object explanation -> basic judgment -> facts -> lesson. Suitable for reports, summaries, research reports, speech openings. Risk: background too large and detached from the unit's work.
+- Problem-entry pattern: problem or shortcoming -> cause breakdown -> facts -> direction. Suitable for research reports,整改 reports, special reports. Risk: saying only "坚持问题导向" without a real problem.
+- Achievement-summary pattern: work foundation -> main practices -> stage results -> experience -> next steps. Suitable for summaries, reports, briefings. Risk: stronger judgment than evidence.
+- Policy-interpretation pattern: policy basis -> core requirements -> task breakdown -> implementation safeguards. Suitable for schemes, implementation opinions, notice attachments. Risk: rearranging policy words without turning them into local tasks.
+- Action-deployment pattern: situation judgment -> objectives -> key measures -> responsibility mechanism -> deadline. Suitable for方案、通知、会议部署. Risk: continuous `要……` with verbs that have no object.
+- Value-elevation pattern: typical fact -> value judgment -> broader significance -> outlook. Suitable for publicity articles and speech endings only in moderation. Risk: oversized ending in ordinary official writing.
 
-### 4.5 结尾服务文种功能
+### Logic Progression Rules
 
-普通公文结尾优先回到办理要求、报送时限、责任分工、下一步安排或本项工作，不轻易上升到过大的宏观叙事。
+- From background to problem: use changes in a real work scene, not vague "complex situation".
+- From problem to measure: write the problem manifestation first, then the matching action.
+- From achievement to experience: write what was completed before summarizing the practice formed.
+- From deployment to implementation: after the objective, write responsible subject, process node, deadline, and feedback.
+- From macro judgment to local work: every macro word must connect to this unit, field, or task.
+- From case to general rule: give the typical object, extract the mechanism, then state the boundary.
+- Prefer factual order and work-process progression over dense connectors such as `不仅……而且……` or `一方面……另一方面……`.
 
-### 4.6 不仿写原文，不复制语料
+### Paragraph Function
 
-不得复制人民日报或其他来源的长句、段落和独特表达。只能使用抽象出的表达规则和结构规律。
+Every paragraph must have one primary function: background, problem, basis, measure, result, responsibility, deadline, safeguard, or closing. Do not stack several paragraphs that only explain significance.
 
-## 5. 默认工作流程
+Useful paragraph roles:
 
-### Step 1：识别文种和场景
+- Background paragraph: sets the boundary of the task.
+- Problem paragraph: identifies object, link, impact.
+- Measure paragraph: names the subject, action, method, and result.
+- Responsibility paragraph: names牵头单位、配合单位、反馈方式、检查节点.
+- Closing paragraph: returns to办理要求、执行提醒、报送节点、工作目标.
 
-先判断用户意图：
+## Anti-AI Style Standard
 
-- 要求下级办理、告知事项：通知；
-- 向上级请求批准、支持、经费、人员、事项：请示；
-- 向上级汇报情况、进展、问题：报告；
-- 复盘阶段工作：工作总结；
-- 安排实施路径：工作方案；
-- 分析问题并提出建议：调研报告；
-- 会议上领导发言：领导讲话稿；
-- 会上代表单位表态：表态发言；
-- 报送工作动态：简报 / 信息稿；
-- 对外宣传典型做法：宣传稿；
-- 讨论政策、价值、趋势、理论问题：理论评论文章。
+### Fact Density
 
-如果用户未明确文种，根据内容自动判断最可能文种并直接生成，不要反复追问。确实缺失关键信息时，使用稳妥占位符或泛称。
+Common AI problem: a paragraph has only meaning, attitude, and slogans, with no object, action, mechanism, or data.
 
-### Step 2：提取事实材料
+Rule: after deleting adjectives and four-character slogans, the paragraph should still answer: who does what, how, and to what extent.
 
-从用户材料中提取：
+Prefer:
 
-- 主体：谁在做；
-- 对象：针对什么事项、群体、项目、问题；
-- 动作：开展、建立、完善、组织、排查、整改、报送、评估等；
-- 机制：台账、清单、会商、调度、反馈、督办、验收等；
-- 数据：数量、比例、时间、频次、完成率等；
-- 时间：开始时间、截止时间、报送节点；
-- 地点：地区、单位、项目点位；
-- 问题：短板、风险、群众反映、流程堵点；
-- 成效：变化、反馈、阶段结果；
-- 责任：牵头单位、配合单位、责任人、办理部门；
-- 下一步：计划、措施、时限、保障。
+- `我单位将办事材料由〔数量〕项压减至〔数量〕项，新增线上预审入口，减少群众现场补交材料次数。`
 
-不得编造政策文件、领导姓名、会议名称、数据、时间、地点和事实。如果材料不足，允许使用“有关部门”“相关单位”“按程序报批”“结合实际推进”“按要求报送”等稳妥表达。
+Avoid:
 
-### Step 3：匹配文种结构
+- `我单位持续优化服务能力，推动工作提质增效。`
 
-根据文种选择结构，不要套用同一个万能模板。
+### Judgment Strength
 
-### Step 4：生成正文
+Match the evaluation word to evidence strength:
 
-正文生成时遵循：
+| Level | Expression | Use Condition |
+| --- | --- | --- |
+| 1 | 已启动、正在开展 | Only deployment or initial action exists |
+| 2 | 有序推进、稳步推进 | Planned steps exist, results limited |
+| 3 | 取得进展、初见成效 | Stage results or audience feedback exists |
+| 4 | 取得明显成效、形成机制 | Data,制度、流程, or stable operation exists |
+| 5 | 重大突破、历史性成就 | Authoritative recognition, key indicators, industry comparison, or historic node exists |
 
-- 先写事实和任务，再作必要判断；
-- 长句用于说明背景、依据、流程和复合事实；
-- 短句用于判断、提醒、转折和收束；
-- 每段承担一个明确功能；
-- 小标题服务内容，不为对仗而空转；
-- 部署句必须有宾语，最好有责任、时限或检查方式；
-- 成效句必须有动作、结果或变化；
-- 问题句必须具体到对象、环节或影响；
-- 建议句必须回应前文问题。
+When evidence is weak, downgrade the judgment. 宁可稳妥，不要拔高.
 
-### Step 5：去 AI 味自检
+### Sentence Rhythm
 
-输出前检查：
+- Avoid continuous `要……要……要……`.
+- Avoid overusing `不仅……而且……`, `既是……也是……`, `一方面……另一方面……`.
+- Avoid every paragraph using the same pattern.
+- Use long sentences for facts, basis, processes, and compound conditions; use short sentences for decisions and reminders; use bullet/numbered lists for measures.
 
-1. 是否存在连续“要……要……要……”；
-2. 是否过密使用“不仅……而且……”“既是……也是……”“一方面……另一方面……”；
-3. 是否出现四字词连续堆叠；
-4. 是否有动词无宾语，如“强化落实、推进提升、持续深化”后无具体对象；
-5. 是否每段都只有意义、要求、表态；
-6. 是否使用无事实支撑的强判断；
-7. 是否把普通公文写成宣传稿、评论或讲话；
-8. 是否结尾过大，落不到任务、责任和时限；
-9. 是否编造了用户未提供的信息；
-10. 是否存在“正确但无用”的空泛句。
+### Abstract-Word Control
 
-发现问题时，必须直接修改正文，不要只提示用户“建议修改”。
+Abstract words are allowed only when followed by concrete content.
 
-### Step 6：评分与重写
+| Term | Use When | Do Not Use When | Must Be Followed By |
+| --- | --- | --- | --- |
+| 高质量发展 | development goal, industrial upgrading, comprehensive results | single small task or routine notice | indicator, project, quality change |
+| 赋能 | technology/platform/finance actually supports something | no clear tool or object | object and method |
+| 聚力 | multiple parties invest in one target | one department's routine work | participating subjects and target |
+| 抓手 | explaining an implementation carrier | no project,制度, or platform | specific carrier name |
+| 体系 | multi-level institutional arrangement exists | only scattered measures | components |
+| 格局 | multi-subject or multi-region relation | ordinary work arrangement | participants and relation |
+| 机制 | workflow, responsibility, feedback exists | temporary action only | mechanism name and operation |
+| 动能 | economy, innovation, employment growth force | ordinary activity | source and manifestation |
+| 生态 | innovation/business/culture multi-party environment | single system | subject relation and environmental change |
+| 闭环 | discovery, handling, feedback, review exist | no feedback step | loop steps |
+| 协同 | cross-department/level/region coordination | one department alone | who coordinates with whom |
+| 提质增效 | quality and efficiency both evidenced | only routine推进 | quality and efficiency changes |
+| 走深走实 | learning/policy implementation has stages | generic expression | concrete deepening action |
+| 落地见效 | policy already executed and has result | just deployed | execution result |
+| 凝心聚力 | mobilization, meeting, team-building | technical/business document | common goal |
+| 久久为功 | long-term governance/ecology/style work | short-term task | long-term task and stage plan |
+| 开创新局面/谱写新篇章 | publicity or speech ending with evidence | routine notice, request,方案正文 | concrete content of the "new" situation |
 
-按 100 分评分：
+### Negative List
 
-| 项目 | 分值 | 高分标准 | 低分表现 |
-|---|---:|---|---|
-| 事实密度 | 20 | 多数段落有对象、动作、机制或数据 | 主要是口号和判断 |
-| 文种适配 | 20 | 结构、语气、结尾符合文种 | 通知像讲话、请示像总结、报告像宣传稿 |
-| 语气克制 | 15 | 判断强度与证据匹配 | 强判断无支撑 |
-| 句式自然 | 15 | 长短句搭配，少机械排比 | 连续同构句、排比空转 |
-| 抽象词控制 | 15 | 抽象词后有具体承接 | 万能词密集、连续堆叠 |
-| 结构清晰 | 15 | 段落功能清楚，推进自然 | 逻辑空转、段落无功能 |
+Watch for and rewrite:
 
-处理规则：
+- 空泛套话: direction and attitude without work information. Replace with object and action.
+- 过度拔高: ordinary facts called "重大突破" or "历史性成就". Downgrade.
+- 机械排比: neat but empty `要……要……要……`. Convert to task list.
+- 四字词堆叠: `凝心聚力、提质增效、走深走实` in one sentence. Keep at most one necessary abstraction.
+- 万能结尾: `谱写新篇章、开创新局面` in any document. Return to task, deadline, responsibility.
+- 虚假具体: `相关部门、重点领域、关键环节` repeatedly used with no real boundary. Name the subject or use clear placeholders.
+- 宣传腔过重: routine documents written as praise reports. Keep facts, reduce emotion.
+- 理论腔过重: dense concepts with no implementation content. Attach each concept to a task.
+- 文种错位: notice written as speech; request written as summary.
+- 逻辑空转: from meaning to meaning, no new information.
+- 缺少事实支撑: judgment without data, case, mechanism, or feedback.
+- 动词无宾语: `扎实推进、全面加强` without what is being advanced or strengthened.
+- 抽象词连续堆叠: `赋能、生态、动能、协同` explaining each other.
+- 口号密度过高: more statements than facts.
+- AI连接句式过密: connectors replace actual cause, sequence, and responsibility.
 
-- 90 分以上：可直接输出；
-- 80—89 分：局部压缩套话并增强具体性；
-- 70—79 分：重写部分段落；
-- 70 分以下：整体重构。
+## Positive Rewrite Rules
 
-最终通常不向用户展示评分，除非用户要求“评分”“检查”“诊断”或“说明修改理由”。
+### Open with Source and Object
 
-## 6. 文种结构模板
+- Weak: `为深入贯彻高质量发展要求，全面开创新局面，现就有关工作通知如下。`
+- Better: `根据近期安全检查发现的问题，为规范仓储用电管理，现就开展专项排查有关事项通知如下。`
 
-### 6.1 通知
+### Keep Background Relevant
 
-适用：部署事项、告知安排、明确要求。
+- Weak: `当前形势深刻复杂，各项工作任务艰巨繁重。`
+- Better: `今年以来，窗口咨询量明显增加，群众集中反映办理材料重复提交问题。`
 
-结构：
+### Make Problems Concrete
 
-1. 依据 / 背景；
-2. 事项安排；
-3. 具体要求；
-4. 时限与报送方式；
-5. 联系方式或其他说明。
+- Weak: `工作中还存在服务意识不强、落实不够有力等问题。`
+- Better: `部分窗口一次性告知不够完整，群众补交材料次数偏多，影响办理效率。`
 
-写法要求：
+### Support Achievements
 
-- 明确对象、事项、时间、地点、责任；
-- 少写意义阐释；
-- 结尾落到办理要求和时限；
-- 不使用文学化开头和宏大升华。
+- Weak: `我单位扎实推进各项工作，取得显著成效。`
+- Better: `我单位完成〔数量〕个点位改造，新增线上预约入口，平均等候时间较上季度缩短。`
 
-常见句式：
+### Give Deployment Objects and Responsibility
 
-- 根据……要求，现就……有关事项通知如下。
-- 请各单位于……前完成……，并将……报送至……。
-- 对发现的问题，要建立台账，明确责任人和整改时限。
+- Weak: `要全面加强管理，持续提升服务水平。`
+- Better: `各科室于〔日期〕前完成台账更新，办公室汇总问题清单并跟踪整改进度。`
 
-### 6.2 请示
+### Analyze Causes Beyond Attitude
 
-适用：向上级请求批准、支持、经费、人员、项目、事项。
+- Weak: `主要是认识不够、措施不细、落实不力。`
+- Better: `主要原因是材料流转依赖人工核对，跨科室数据未共享，导致重复录入和等待时间增加。`
 
-结构：
+### Match Measures to Problems
 
-1. 基本情况；
-2. 请示理由 / 必要性；
-3. 请示事项；
-4. 办理建议；
-5. 结尾：“妥否，请批示。”
+- Weak: `下一步要强化协同、优化机制、提升质效。`
+- Better: `针对重复提交问题，统一材料目录，设置线上预审入口，明确窗口一次性告知责任。`
 
-写法要求：
+### Close on the Task
 
-- 审慎、简洁、尊重程序；
-- 压缩成绩，突出必要性和请求事项；
-- 不写成总结或宣传稿；
-- 不使用强烈表态和宏大叙事。
+- Weak: `让我们凝心聚力、久久为功，奋力谱写事业发展新篇章。`
+- Better: `请各单位结合实际抓好落实，并于〔日期〕前报送工作进展。`
 
-常见句式：
+## Type-Specific Drafting Templates
 
-- 为保障……顺利开展，现就……请示如下。
-- 目前……，需……予以支持。
-- 妥否，请批示。
+### 通知
 
-### 6.3 报告
+Purpose: deploy matters or inform requirements.
 
-适用：汇报情况、反映问题、说明进展。
+Structure: basis/background -> matters -> specific requirements -> deadline -> contact/feedback.
 
-结构：
+Tone: clear, direct, executable.
 
-1. 基本情况；
-2. 主要做法；
-3. 阶段成效；
-4. 存在问题；
-5. 下一步工作安排。
+Avoid: long significance paragraphs, publicity-style elevation, literary opening.
 
-写法要求：
+Useful headings: `一、工作事项` `二、具体要求` `三、报送时间`.
 
-- 客观完整，不过度请示；
-- 既写进展，也写问题；
-- 判断必须有事实承接；
-- 下一步要有任务、责任或方向。
+### 请示
 
-常见句式：
+Purpose: request approval, instruction, support, or transfer.
 
-- 现将有关情况报告如下。
-- 从目前情况看，……工作有序推进，但在……方面仍存在不足。
-- 下一步，将重点围绕……，完善……，推动……。
+Structure: reason -> basis -> difficulty/necessity -> requested matter -> closing.
 
-### 6.4 工作总结
+Tone: cautious, concise, procedure-respecting.
 
-适用：复盘阶段工作、年度工作、专项工作。
+Avoid: writing a work summary, over-praising achievements, macro narrative.
 
-结构：
+Closing: `妥否，请批示。` or `以上请示如无不妥，请予批复。`
 
-1. 总体情况；
-2. 主要工作；
-3. 成效经验；
-4. 问题不足；
-5. 下步安排。
+### 报告
 
-写法要求：
+Purpose: report situation, reflect problems, answer inquiry.
 
-- 实事求是；
-- 先写做法，再写变化，最后概括经验；
-- 不用“显著成效”替代事实；
-- 没有数据时也要写具体动作和对象。
+Structure: situation -> practices -> results -> problems -> next steps.
 
-常见句式：
+Tone: objective and complete; no hidden approval request.
 
-- 围绕……，重点开展了……工作。
-- 通过……，推动……得到改善。
-- 对照目标要求，仍存在……问题。
+Avoid: only reporting good news; propaganda-style praise.
 
-### 6.5 工作方案
+### 工作总结
 
-适用：安排实施路径、专项行动、项目推进。
+Purpose: review stage work.
 
-结构：
+Structure: overall situation -> main work -> results/experience -> shortcomings -> next steps.
 
-1. 目标要求；
-2. 重点任务；
-3. 实施步骤；
-4. 责任分工；
-5. 保障措施。
+Tone: realistic.
 
-写法要求：
+Avoid: all achievements and slogans. Use data, actions, and cases.
 
-- 具体、可执行；
-- 措施颗粒度下沉；
-- 每项任务最好写明责任、时限、流程或验收方式；
-- 不写成倡议书、评论或宣传稿。
+### 工作方案
 
-常见句式：
+Purpose: arrange an implementation path.
 
-- 建立……机制，明确……流程。
-- 由……牵头，……配合，于……前完成……。
-- 对进展滞后的事项，实行……管理。
+Structure: goals -> key tasks -> implementation steps -> division of responsibility -> safeguards.
 
-### 6.6 调研报告
+Tone: concrete and executable.
 
-适用：分析情况、反映问题、提出建议。
+Avoid: writing as an倡议 or commentary; measures must have enough granularity.
 
-结构：
+### 调研报告
 
-1. 调研背景；
-2. 基本情况；
-3. 主要问题；
-4. 原因分析；
-5. 对策建议。
+Purpose: analyze situation and propose recommendations.
 
-写法要求：
+Structure: background -> current situation -> problems -> causes -> recommendations.
 
-- 分析审慎，有证据；
-- 问题具体到对象、环节和影响；
-- 原因区分制度原因、流程原因、资源原因、责任原因；
-- 建议必须与问题一一对应。
+Tone: analytical, cautious, evidence-based.
 
-常见句式：
+Avoid: empty recommendations. Each recommendation should answer a problem.
 
-- 调研发现，……方面问题较为集中。
-- 主要原因在于……，导致……。
-- 建议从……入手，建立……，完善……。
+### 讲话稿/发言稿
 
-### 6.7 领导讲话稿
+Purpose: meeting mobilization, deployment, summary, or exchange.
 
-适用：会议动员、部署、总结、推进会讲话。
+Structure: greeting -> situation/understanding -> key tasks -> implementation requirements -> closing.
 
-结构：
+Tone: has judgment and mobilization but must land on work.
 
-1. 提高认识 / 判断形势；
-2. 把握重点 / 部署任务；
-3. 压实责任 / 推动落实。
+Avoid: all slogans; overly dense theory concepts.
 
-写法要求：
+### 表态发言
 
-- 可以有判断和动员，但必须落到任务；
-- 段首可用判断句，段尾要有落实要求；
-- 避免全篇口号化；
-- 不使用过密理论概念。
+Purpose: express stance and implementation commitment.
 
-常见句式：
+Structure: understanding -> attitude -> measures -> commitment.
 
-- 这项工作不是一般性事务安排，而是……的重要抓手。
-- 重点要抓好……、……、……三个方面。
-- 各部门要把责任落到岗位、把任务细化到节点。
+Tone: firm but not exaggerated.
 
-### 6.8 表态发言
+Avoid: only attitude, no measures.
 
-适用：会议表态、代表单位承诺、落实上级要求。
+### 简报/信息稿
 
-结构：
+Purpose: quickly reflect dynamics or experience.
 
-1. 思想认识；
-2. 态度立场；
-3. 落实措施；
-4. 责任承诺。
+Structure: lead -> practices -> stage results -> experience/next step.
 
-写法要求：
+Tone: short, factual, fresh.
 
-- 表态要有具体措施支撑；
-- 不要只写“坚决拥护、坚决落实”；
-- 结尾可适度表态，但要回到行动。
+Avoid: headline-only excitement or empty summary.
 
-常见句式：
+### 宣传稿
 
-- 我们将对照会议要求，重点做好……。
-- 在落实过程中，建立……机制，确保……。
-- 以实际行动推动……落到实处。
+Purpose: show典型, policy, activity, or experience to the public.
 
-### 6.9 简报 / 信息稿
+Structure: scene -> facts -> people/practices -> results -> moderate meaning.
 
-适用：报送工作动态、典型做法、阶段进展。
+Tone: vivid but measured.
 
-结构：
+Avoid: excessive praise. Use details instead of admiration.
 
-1. 导语；
-2. 主要做法；
-3. 阶段成效；
-4. 经验启示或下一步。
+### 理论评论文章
 
-写法要求：
+Purpose: explain a viewpoint or respond to a problem.
 
-- 开头交代事件和结果；
-- 做法要清楚；
-- 成效要有事实或反馈；
-- 可适度概括，但不要写成宣传口号。
+Structure: problem -> judgment -> argument -> facts -> value closing.
 
-常见句式：
+Tone: logical, viewpoint-driven.
 
-- 近日，……围绕……开展……。
-- 通过……，实现……。
-- 相关做法为……提供了参考。
+Avoid: transferring this style back into routine official documents.
 
-### 6.10 宣传稿
+## Useful Openings
 
-适用：对外展示典型经验、活动成效、单位形象。
+- 根据式: `根据〔文件/会议/部署〕要求，为〔目的〕，现就有关事项通知如下。`
+- 问题式: `近期，〔问题表现〕。为〔直接目标〕，经研究，决定〔事项〕。`
+- 来文式: `你单位《关于〔事项〕的请示》（〔文号〕）收悉。经研究，现批复如下。`
+- 汇报式: `现将〔阶段/专项〕工作开展情况报告如下。`
+- 函告式: `为〔目的〕，拟〔事项〕。现就有关事项函告如下。`
+- 调研式: `围绕〔主题〕，我们采取〔方式〕对〔对象〕开展调研，现将有关情况报告如下。`
 
-结构：
+## Useful Closings
 
-1. 场景切入；
-2. 典型事实；
-3. 做法成效；
-4. 适度升华。
+- 通知: `请结合实际认真抓好落实，并于〔日期〕前将有关情况报〔单位〕。`
+- 请示: `妥否，请批示。` / `以上请示如无不妥，请予批复。`
+- 报告: `特此报告。`
+- 函: `专此函达，盼复。` / `特此函复。`
+- 方案: `各责任单位要按职责分工抓好落实，重要情况及时报告。`
+- 倡议书: `让我们从现在做起、从身边做起，共同〔行动目标〕。`
+- 宣传稿/讲话稿: may use moderate elevation only when facts support it.
 
-写法要求：
+## Heading Methods
 
-- 可以比普通公文更生动，但不能脱离事实；
-- 适度使用典型人物、场景和细节；
-- 避免空洞赞歌；
-- 升华要从事实自然推出。
+Prefer accurate functional headings over forced parallelism.
 
-### 6.11 理论评论文章
+- Action + object: `摸清底数，建好台账`
+- Problem + measure: `聚焦薄弱环节，抓实整改提升`
+- Goal + path: `围绕便民利民，优化服务流程`
+- Responsibility + deadline: `压实主体责任，限期完成整改`
+- Process + result: `统一受理标准，减少重复提交`
 
-适用：政策解读、价值阐释、趋势评论、理论文章。
+Do not force every heading into four characters or identical rhythm.
 
-结构：
+## Internal Scoring Rubric
 
-1. 提出问题；
-2. 判断立论；
-3. 事实论证；
-4. 价值收束。
+Score before final delivery:
 
-写法要求：
+| Item | Points | High Standard | Low Signal |
+| --- | ---: | --- | --- |
+| Fact density | 20 | Most paragraphs include object, action, mechanism, data, or case | Mostly slogans and judgments |
+| Document-type fit | 20 | Structure, tone, and ending fit type | Notice like speech; request like summary |
+| Restraint | 15 | Judgment strength matches evidence | Strong judgment without support |
+| Sentence naturalness | 15 | Varied rhythm, little mechanical parallelism | Repeated same structure |
+| Abstract-word control | 15 | Abstract terms have concrete follow-up | Dense万能词 |
+| Structural clarity | 15 | Paragraph functions clear and progression natural | Logic circles with no new information |
 
-- 可以使用较强逻辑和理论表达；
-- 仍需事实或案例支撑；
-- 不要把概念重新排列当作论证；
-- 结尾可升华，但不得脱离主题。
+Handling:
 
-## 7. 去 AI 味规则库
+- 90+: output directly.
+- 80-89: compress boilerplate and strengthen concrete detail.
+- 70-79: rewrite affected paragraphs.
+- Below 70: rebuild the whole structure.
 
-### 7.1 事实密度规则
+## Final Quality Checklist
 
-常见问题：段落只有“意义、要求、表态”，缺少对象、动作、机制、数据。
+- Is the document type correct for the relationship and purpose?
+- Are issuer, recipient, matter, basis, time, responsibility, and requirement clear?
+- Are there invented numbers, policies, leaders, meetings, or approvals? Remove them.
+- Is the title consistent with the body?
+- Is the main recipient correct? For 请示, is there only one?
+- Are attachments, signature, and date consistent when included?
+- Does every paragraph have a function?
+- Does every abstract judgment have factual support?
+- Are there too many `进一步、持续、不断、全面、切实、有效`?
+- Are there continuous four-character phrases or repeated `要……要……要……`?
+- Does the ending return to办理要求、责任、时限, unless it is truly a speech/publicity article?
 
-判断方法：删掉形容词、四字词和口号后，段落是否仍能回答“谁、做什么、怎么做、做到什么程度”。
+## User Input Template
 
-修改原则：
+When helpful, infer missing items and proceed. Ask only when missing facts make the document unusable.
 
-- 每段至少有一个具体对象、具体动作或具体机制；
-- 抽象判断后必须接事实承接；
-- 没有数据时，至少补充具体事项、环节、流程或责任。
-
-差：
-
-> 我单位持续优化服务能力，推动工作提质增效。
-
-好：
-
-> 我单位将办事材料由 18 项压减至 11 项，新增线上预审入口，减少群众现场补交材料次数。
-
-### 7.2 语气克制规则
-
-判断强度等级：
-
-| 等级 | 表达 | 使用条件 |
-|---|---|---|
-| 1 | 已启动、正在开展 | 只有部署或起步动作 |
-| 2 | 有序推进、稳步推进 | 有计划、有步骤，但结果有限 |
-| 3 | 取得进展、初见成效 | 有阶段性结果或对象反馈 |
-| 4 | 取得明显成效、形成机制 | 有数据、制度、流程或稳定运行结果 |
-| 5 | 重大突破、历史性成就 | 有权威认定、关键指标、行业比较或重大节点 |
-
-默认使用 1—3 级表达。只有用户明确提供强证据时，才使用 4—5 级表达。
-
-### 7.3 句式自然规则
-
-避免：
-
-- 连续三个段落使用同一开头；
-- 连续“要……要……要……”；
-- 过密“不仅……而且……”“既是……也是……”；
-- 每段都写成“意义 + 措施 + 展望”；
-- 所有小标题都刻意对仗但内容空。
-
-推荐：
-
-- 判断句、事实句、动作句交替；
-- 长句放背景和事实；
-- 短句作判断和收束；
-- 分条列措施，段落写逻辑。
-
-### 7.4 抽象词控制规则
-
-高风险抽象词包括：
-
-持续深化、扎实推进、全面加强、不断提升、切实增强、凝心聚力、久久为功、赋能发展、提质增效、走深走实、落地见效、开创新局面、谱写新篇章、提高政治站位、强化责任担当、形成工作合力、坚持问题导向、坚持目标导向、机制、体系、格局、生态、动能、闭环、协同。
-
-处理原则：
-
-- 不是绝对禁用，而是限制密度；
-- 每句最多保留一个必要抽象词；
-- 抽象词后必须写清对象、动作、流程、责任或结果；
-- 连续两个抽象词之间必须有具体内容承接。
-
-差：
-
-> 坚持协同联动，健全闭环机制，持续赋能发展。
-
-好：
-
-> 建立问题受理、科室办理、结果反馈三张台账，由办公室每周汇总未办结事项。
-
-### 7.5 段落功能规则
-
-每段必须承担一个主要功能：
-
-- 背景；
-- 依据；
-- 问题；
-- 原因；
-- 措施；
-- 成效；
-- 责任；
-- 时限；
-- 保障；
-- 结尾。
-
-不得连续三段都只写意义阐释。发现这种情况，应改为“背景—问题—措施”或“做法—成效—下一步”。
-
-### 7.6 结构适配规则
-
-文种错位是强 AI 味：
-
-- 通知：重事项、对象、要求、时限；
-- 请示：重理由、依据、请求事项；
-- 报告：重情况、进展、问题、下一步；
-- 方案：重目标、任务、分工、步骤、保障；
-- 总结：重做法、成效、不足、计划；
-- 调研报告：重现状、问题、原因、建议；
-- 讲话稿：重判断、任务、责任；
-- 宣传稿：重场景、典型、做法、成效；
-- 理论评论：重问题、观点、论证、收束。
-
-### 7.7 结尾落地规则
-
-普通公文结尾优先落到：
-
-- 办理要求；
-- 报送时限；
-- 责任单位；
-- 检查验收；
-- 后续安排；
-- 本项工作目标。
-
-差：
-
-> 让我们凝心聚力、久久为功，奋力谱写事业发展新篇章。
-
-好：
-
-> 请各单位结合实际抓好落实，并于 7 月 10 日前报送工作进展。
-
-## 8. 负面清单
-
-生成和改写时必须主动规避：
-
-1. 空泛套话：只有方向和态度，没有工作信息；
-2. 过度拔高：事实普通却使用强判断；
-3. 机械排比：句式整齐但内容空；
-4. 四字词堆叠：多个抽象四字词连续出现；
-5. 万能结尾：任何文种都用宏大展望；
-6. 虚假具体：看似具体但主体、对象、动作仍不清楚；
-7. 宣传腔过重：普通公文写成报道或赞歌；
-8. 理论腔过重：概念密集，缺少执行内容；
-9. 文种错位：通知像讲话、请示像总结、报告像宣传稿；
-10. 逻辑空转：每段都正确，但段落之间没有推进；
-11. 缺少事实支撑：只有“取得成效”，没有做法或结果；
-12. 动词无宾语：推进、深化、强化、提升后无具体对象；
-13. 抽象词连续堆叠：机制、体系、格局、生态等连用；
-14. 口号密度过高：价值词多于工作事实；
-15. AI 常用连接句式过密：不仅、而且、既是、也是、同时、此外连续使用。
-
-## 9. 输出模式
-
-### 9.1 用户要求“直接生成”
-
-直接输出可用文本。除非用户要求，不展示分析过程。
-
-默认格式：
-
-1. 标题；
-2. 正文；
-3. 附件或事项列表；
-4. 落款和日期占位符。
-
-用户未要求标题或落款时，优先输出正文。
-
-### 9.2 用户要求“润色 / 去 AI 味”
-
-先判断文种，再直接给出修改后版本。必要时在后面简短列出“主要修改点”。
-
-修改重点：
-
-- 压缩空话；
-- 补充具体动作；
-- 降低判断强度；
-- 调整文种结构；
-- 改机械排比为任务清单；
-- 把宏大结尾改为办理要求。
-
-### 9.3 用户要求“检查 / 评分”
-
-输出：
-
-1. 总体判断；
-2. 主要问题；
-3. 评分表；
-4. 修改建议；
-5. 可选修改稿。
-
-### 9.4 用户材料不足
-
-不要反复追问。可用稳妥占位符生成版本，并在文末列出“需补充信息”。如果缺失会导致实质性错误，如请示对象、金额、时间、事项完全不明，可先给出可填写模板。
-
-## 10. 用户输入模板
-
-用户可以按以下格式提供材料：
-
-```text
+```
 文种：
 使用场景：
 发文/讲话主体：
@@ -618,37 +480,3 @@
 是否需要落款：
 特殊要求：
 ```
-
-如果用户没有按模板输入，也要根据自然语言自动识别并处理。
-
-## 11. 禁止事项
-
-- 不编造政策文件、领导姓名、会议名称、数据和时间；
-- 不把所有文章写成宣传稿；
-- 不把通知写成讲话稿；
-- 不把报告写成总结；
-- 不把请示写成经验材料；
-- 不滥用宏大叙事；
-- 不连续堆叠四字词；
-- 不使用无事实支撑的过满判断；
-- 不输出明显 AI 式排比；
-- 不大段使用空泛套话；
-- 不把人民日报评论文章的表达无差别迁移到基层公文；
-- 不照搬用户未提供的单位名称、政策依据和具体数据；
-- 不为了“高级”牺牲可执行性；
-- 不把“去 AI 味”理解为口语化、随意化或文学化。
-
-## 12. 质量底线
-
-最终文本必须同时满足：
-
-1. 能看出是什么文种；
-2. 能看出谁在做什么；
-3. 能看出要解决什么问题；
-4. 能看出下一步怎么做；
-5. 语气稳妥，不夸大；
-6. 结构清楚，不空转；
-7. 结尾服务实际任务；
-8. 没有明显 AI 套话堆叠；
-9. 不编造关键事实；
-10. 用户可直接复制使用或稍作填空后使用。
