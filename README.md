@@ -280,8 +280,7 @@ official-document-skill/
 ├─ README.md          # 说明、能力、升级点
 ├─ examples.md        # 示例输入输出
 ├─ tests.md           # 人工回归测试
-└─ agents/
-   └─ openai.yaml     # Codex 展示元数据
+├─ LISCENCE
 ```
 
 ---
