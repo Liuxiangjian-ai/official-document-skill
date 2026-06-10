@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/评分-6维自动-brightgreen" />
 </p>
 
-> **让 AI 写出来的公文更像“能交稿的机关材料”，而不是套话拼接。**
+> **让 AI 像体制内笔杆子一样。**
 
 `Official Document Skill` 是一个面向中文公文、政务应用文和机关材料写作的 Codex Skill。它会根据用户提供的文种、场景、对象和材料，生成结构规范、语气稳妥、内容具体、少 AI 味、可直接交付的文本。
 
