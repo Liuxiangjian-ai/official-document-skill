@@ -1,6 +1,6 @@
 ---
 name: official-document-skill
-description: Draft, revise, polish, and quality-check Chinese official documents and government-style practical writing (公文、党政机关公文、事务文书、申论应用文、人民日报风格政务表达), producing deliverable drafts with correct document type, format, restrained institutional tone, concrete facts, People's Daily-inspired expression discipline, and reduced AI-flavored phrasing. Use when the user asks for 通知、通报、报告、请示、批复、函、纪要、决定、通告、议案、倡议书、工作方案、工作计划、工作总结、简报、讲话稿、发言稿、汇报材料、调研报告、宣传稿、公开信、感谢信、信访回复、理论评论、政策解读, or asks to 一键生成/润色/改写/降AI味/减少AI味/人民日报风格/检查格式/生成可交付公文.
+description: Draft, revise, polish, humanize, and quality-check Chinese official documents and government-style practical writing (公文、党政机关公文、事务文书、申论应用文、人民日报风格政务表达), producing deliverable drafts with correct document type, format, restrained institutional tone, concrete facts, People's Daily-inspired expression discipline, humanizer-style AI-pattern cleanup, and reduced AI-flavored phrasing. Use when the user asks for 通知、通报、报告、请示、批复、函、纪要、决定、通告、议案、倡议书、工作方案、工作计划、工作总结、简报、讲话稿、发言稿、汇报材料、调研报告、宣传稿、公开信、感谢信、信访回复、理论评论、政策解读, or asks to 一键生成/润色/改写/降AI味/减少AI味/人味/自然表达/人民日报风格/检查格式/生成可交付公文.
 ---
 
 # 公文写作
@@ -11,6 +11,7 @@ Generate or revise Chinese official documents that are structurally correct, usa
 
 - Formal public-document writing rules: document-type choice, official format, upward/downward/parallel writing, closing formulas, and common format errors.
 - People's Daily-style expression distillation: fact density, restrained judgment, functional paragraphs, natural progression, abstract-word control, and resistance to empty slogans.
+- Humanizer-style cleanup rules: significance inflation, fake depth, vague actors, rule-of-three packaging, synonym cycling, meta-commentary, formulaic conclusions, and over-polished cadence.
 
 ## Core Workflow
 
@@ -20,8 +21,9 @@ Generate or revise Chinese official documents that are structurally correct, usa
 4. Build a document skeleton by type. Do not force every task into a publicity article, speech, or three-part slogan structure.
 5. Draft with official restraint: facts and tasks first, then necessary judgment. Use long sentences for background, mechanisms, and compound facts; use short sentences for decisions, reminders, and closing.
 6. Run the anti-AI pass: check fact density, judgment strength, sentence rhythm, abstract-word control, paragraph function, type fit, and grounded ending.
-7. Score internally using the rubric below. If below 80, rewrite or compress hollow paragraphs before final output.
-8. Deliver the final document first. Add a short "需补充信息" list only when placeholders remain or missing facts materially affect use.
+7. Run the humanizer pass: ask "What still makes this look AI-written?" Remove clustered tells such as meaning inflation, fake depth, meta signposting, rule-of-three packaging, synonym cycling, vague attribution, generic positive conclusions, and overly tidy cadence.
+8. Score internally using the rubric below. If below 80, rewrite or compress hollow paragraphs before final output.
+9. Deliver the final document first. Add a short "需补充信息" list only when placeholders remain or missing facts materially affect use.
 
 ## Output Defaults
 
@@ -31,6 +33,7 @@ Generate or revise Chinese official documents that are structurally correct, usa
 - For formal official drafts, include title, main recipient, body, issuing unit, and date when applicable. Include 发文字号、附件、抄送、版记 only if requested or supplied.
 - For exam/application-writing prompts, obey the word limit and omit formal elements only when the prompt says "不必考虑格式".
 - Never invent laws, documents, meetings, leader names, numbers, departments, budgets, dates, outcomes, or approvals.
+- Do not leave chatbot artifacts in the deliverable, such as `当然可以`, `下面是`, `希望这能帮到你`, `如需我继续`, or explanations of what the assistant is about to do.
 
 ## Document-Type Decision
 
@@ -240,6 +243,70 @@ Watch for and rewrite:
 - 抽象词连续堆叠: `赋能、生态、动能、协同` explaining each other.
 - 口号密度过高: more statements than facts.
 - AI连接句式过密: connectors replace actual cause, sequence, and responsibility.
+
+## Humanizer Pass for Official Documents
+
+Use this after the normal公文 anti-AI pass. It is stricter about text that "looks polished" but still feels generated. Keep the official register; do not add blog-style personality, jokes, first-person opinions, or casual asides unless the requested文体 is a personal speech or public-facing article.
+
+### Rewrite, Do Not Merely Delete
+
+When revising user text, preserve the original coverage and intent. If the input has five substantive points, the output should still cover five substantive points unless the user asks to compress. Replace AI patterns with concrete official wording, not with emptiness.
+
+### Cluster-Based Detection
+
+Do not over-edit a phrase just because it is formal. Flag AI味 when several tells appear together: abstract praise + tidy three-part rhythm + vague subject + no facts + generic ending. A single common transition word or a polished sentence is not enough.
+
+### Public-Document Humanizer Checklist
+
+| AI tell | 公文中的表现 | Rewrite rule |
+| --- | --- | --- |
+| Significance inflation | `具有重要意义、标志着、彰显了、充分体现了` used without evidence | State the actual task, result, or policy basis |
+| Fake depth with participles | `推动...、促进...、助力...、彰显...` chained after one sentence | Keep one main action and give object/process |
+| Promotional tone | `亮点纷呈、成效斐然、精彩纷呈、焕发活力` in routine work | Replace with measurable progress or observed change |
+| Vague attribution | `有关方面认为、群众普遍认为、社会反响良好` without source | Name the source, survey, feedback channel, or omit |
+| Formulaic challenge section | `虽然面临挑战，但前景广阔` | Name the actual difficulty and next handling step |
+| AI vocabulary clustering | `关键、赋能、生态、格局、体系、动能` stacked together | Keep the necessary term and attach concrete content |
+| Avoiding simple verbs | `发挥着重要作用、承载着重要使命、展现出强大动能` | Prefer `是、有、完成、建立、解决、减少、增加` when enough |
+| Rule of three packaging | Every paragraph has exactly three neat items | Use the natural number of tasks; split or merge based on substance |
+| Synonym cycling | `单位/部门/机关/主体` alternated to avoid repetition | Repeat the clearest term;公文允许必要 repetition |
+| False range | `从思想认识到行动落实、从机制建设到成效转化` without real scale | List the real links or remove the range |
+| Passive/subjectless fragments | `已完成整改、将持续推进` with no actor | Add the responsible unit when useful |
+| Meta signposting | `下面从三个方面展开、本文将进行阐述` in the deliverable | Start with the content |
+| Generic positive conclusion | `未来可期、再上新台阶、谱写新篇章` | End with deadline, responsibility, reporting, or next step |
+| Manufactured punchline | Several short dramatic sentences to sound forceful | Use normal official cadence; one short reminder is enough |
+| Aphorism formula | `安全是发展的底线、服务是治理的温度` used as filler | Keep only if it directly leads into a concrete task |
+
+### Cadence Rules
+
+- Avoid perfectly symmetrical paragraph design when the material does not support it. Real公文 can have one short paragraph for background and longer paragraphs for measures.
+- Avoid making every item begin with the same verb (`强化、强化、强化`) or every heading the same length.
+- Repeat official nouns when precision requires it. Do not rotate synonyms just to sound varied.
+- Prefer simple verbs where possible: `是、有、建成、完成、发现、整改、报送、反馈、纳入、公开`.
+- In formal公文, neutral and plain is the human voice. Do not inject personality merely to sound human.
+
+### Hard Cuts in Final Deliverables
+
+Before final output, remove:
+
+- Chatbot framing: `当然可以、以下是、我为你、希望有帮助、如需继续`.
+- Tutorial announcements: `下面我们来看、接下来从以下方面、让我们深入探讨`.
+- Knowledge-gap filler: `由于资料有限、根据现有信息推测、可能大概`.
+- Decoration: emojis, bolded inline labels, unnecessary English title case.
+- Over-dramatic punctuation and web-writing devices. In Chinese公文, prefer normal Chinese punctuation and paragraphing.
+
+### Second-Pass Question
+
+Before final delivery, ask internally:
+
+`如果这篇公文被退回，最可能被批评哪里像 AI 写的？`
+
+Fix the answer before sending. Common fixes:
+
+- If the answer is "空": add facts, actors, mechanisms, deadlines.
+- If the answer is "飘": downgrade judgments and remove macro elevation.
+- If the answer is "整齐得假": vary sentence and paragraph length based on content.
+- If the answer is "不像这个文种": rebuild using the document-type template.
+- If the answer is "像聊天回复": remove assistant framing and meta-commentary.
 
 ## Positive Rewrite Rules
 
@@ -463,6 +530,8 @@ Handling:
 - Are there too many `进一步、持续、不断、全面、切实、有效`?
 - Are there continuous four-character phrases or repeated `要……要……要……`?
 - Does the ending return to办理要求、责任、时限, unless it is truly a speech/publicity article?
+- Does the text still contain humanizer tells: significance inflation, fake-depth verb chains, vague attribution, rule-of-three packaging, synonym cycling, meta signposting, or generic positive conclusion?
+- Would the draft still make sense if all decorative adjectives, slogans, and transitional announcements were removed?
 
 ## User Input Template
 
